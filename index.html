@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="css/style.css">
+      <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- <link rel="stylesheet" type="text/css" href="style_home.css"> -->
+   </head>
+   <body >
+
+      <div class="navbar navbar-expand-md navbar-dark bg-dark mb-4 " role="navigation">
+         <a class="navbar-brand" href="#">Bootstrap 4 NavBar</a>
+         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+             <span class="navbar-toggler-icon"></span>
+         </button>
+         <div class="collapse navbar-collapse" id="navbarCollapse">
+             <ul class="navbar-nav mr-auto">
+                 <li class="nav-item active">
+                     <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                 </li>
+                 <li class="nav-item">
+                     <a class="nav-link" href="http://fontenele.github.io/bootstrap-navbar-dropdowns/" target="_blank">Github</a>
+                 </li>
+                 <li class="nav-item">
+                     <a class="nav-link disabled" href="#">Disabled</a>
+                 </li>
+                 <li class="nav-item dropdown">
+                     <a class="nav-link dropdown-toggle" id="dropdown1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Projects</a>
+                     <ul class="dropdown-menu" aria-labelledby="dropdown1">
+                         <li class="dropdown-item" href="#"><a>Action 1</a></li>
+                         <li class="dropdown-item dropdown">
+                             <a class="dropdown-toggle" id="dropdown1-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown1.1</a>
+                             <ul class="dropdown-menu" aria-labelledby="dropdown1-1">
+                                 <li class="dropdown-item" href="#"><a>Action 1.1</a></li>
+                                 </ul>
+                         </li>
+                     </ul>
+                 </li>
+                 
+             </ul>
+             <form class="form-inline mt-2 mt-md-0">
+                 <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+             </form>
+         </div>
+     </div>
+
+      <div class="wrapper d-flex align-items-stretch">
+         <nav id="sidebar">
+            <div class="custom-menu">
+               <button type="button" id="sidebarCollapse" class="btn btn-primary">
+               <i class="fa fa-bars"></i>
+               <span class="sr-only">Toggle Menu</span>
+               </button>
+            </div>
+            <div class="p-4">
+               <h1><a href="index.html" class="logo">RISS <span>Rodic Co.</span></a></h1>
+               <ul class="list-unstyled components mb-5">
+				 <li class="active">
+					<a href="#"><span class="fa fa-home mr-3"></span> Home</a>
+				 </li>
+                  <li>
+                     <a href="#"><span class="fa fa-user mr-3"></span> Projects</a>
+                  </li>
+                  <li>
+                     <a href="#"><span class="fa fa-briefcase mr-3"></span> Dossier</a>
+                  </li>
+               </ul>
+            </div>
+         </nav>
+         <!-- Page Content  -->
+         
+         <div id="content" class="p-6 p-md-5 pt-5">
+			<iframe id="viewer" name="viewer" allow="fullscreen; xr-spatial-tracking;" src="iframe/model.html" width = "100%" height = "100%" style="display: unset;">
+			</iframe>
+			<a id="button-search" ><img src="images/search.svg"></a>
+			<a id="button-attach-rfi" ><img src="images/link.svg"></a>
+			<a id="button-accept" ><img src="images/accept.svg"></a>
+			<a id="button-cancel" ><img src="images/cancel.svg"></a>
+         
+         </div>
+      </div>
+      <script src="js/jquery.min.js"></script>
+      <script src="js/popper.js"></script>
+      <script src="js/bootstrap.min.js"></script>
+      <script src="three.js"></script>
+      <script src="js/main.js"></script>
+
+      <script>
+         $(document).ready(function () {
+
+$('.navbar .dropdown-item').on('click', function (e) {
+    var $el = $(this).children('.dropdown-toggle');
+    var $parent = $el.offsetParent(".dropdown-menu");
+    $(this).parent("li").toggleClass('open');
+
+    if (!$parent.parent().hasClass('navbar-nav')) {
+        if ($parent.hasClass('show')) {
+            $parent.removeClass('show');
+            $el.next().removeClass('show');
+            $el.next().css({"top": -999, "left": -999});
+        } else {
+            $parent.parent().find('.show').removeClass('show');
+            $parent.addClass('show');
+            $el.next().addClass('show');
+            $el.next().css({"top": $el[0].offsetTop, "left": $parent.outerWidth() - 4});
+        }
+        e.preventDefault();
+        e.stopPropagation();
+    }
+});
+
+$('.navbar .dropdown').on('hidden.bs.dropdown', function () {
+    $(this).find('li.dropdown').removeClass('show open');
+    $(this).find('ul.dropdown-menu').removeClass('show open');
+});
+
+});
+      </script>
+   <script>
+
+      var btnSearch = document.getElementById('button-attach-rfi');
+      var btnAccept = document.getElementById('button-accept');
+      var btnCancel = document.getElementById('button-cancel');
+
+      btnSearch.addEventListener('click',async event=>{	
+
+         var iframeAccess = document.getElementById("viewer").contentWindow
+         iframeAccess.addMeshes()     
+
+      btnAccept.addEventListener('click',event=>
+      {
+            var darth = []
+            iframeAccess.getData().then((data)=>{
+               console.log(data)
+            })
+      })  
+      btnCancel.addEventListener('click',async event=>
+      {
+         iframeAccess.clearAll()
+      })       
+      })
+      
+      
+   </script>
+   </body>
+</html>
